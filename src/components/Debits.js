@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Debits = (props) => {
-
   // Create the list of Debit items
   let debitsView = () => {
     const { debits } = props;

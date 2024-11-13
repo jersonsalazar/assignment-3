@@ -16,7 +16,7 @@ import Credits from './components/Credits';
 import Debits from './components/Debits';
 
 class App extends Component {
-  constructor() {
+  constructor() { // Create and initialize state
     super();
     this.state = {
       accountBalance: 0,
@@ -31,8 +31,8 @@ class App extends Component {
     };
   }
 
+  // Fetch credits and debits data from API endpoints
   componentDidMount() {
-    // Fetch credits and debits data from API endpoints
     axios.get('https://johnnylaicode.github.io/api/credits.json').then(response => {
       this.setState({ creditList: response.data });
       this.calculateAccountBalance();
@@ -76,13 +76,16 @@ class App extends Component {
     }), this.calculateAccountBalance);
   }
 
+  // Update state's currentUser (userName) after "Log In" button is clicked
   mockLogIn = (logInInfo) => {
     const newUser = { ...this.state.currentUser };
     newUser.userName = logInInfo.userName;
     this.setState({ currentUser: newUser });
   }
 
+  // Create Routes and React elements to be rendered using React components
   render() {
+    // Create React elements and pass input props to components
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance} />);
     const UserProfileComponent = () => (
       <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
@@ -91,8 +94,9 @@ class App extends Component {
     const CreditsComponent = () => (<Credits credits={this.state.creditList} addCredit={this.addCredit} accountBalance={this.state.accountBalance} creditsTotal={this.state.creditsTotal} debitsTotal={this.state.debitsTotal} />);
     const DebitsComponent = () => (<Debits debits={this.state.debitList} addDebit={this.addDebit} accountBalance={this.state.accountBalance} creditsTotal={this.state.creditsTotal} debitsTotal={this.state.debitsTotal} />);
 
+    // Important: The "basename" in Router is needed for deploying the React app to GitHub Pages
     return (
-      <Router basename="/bank-of-react-starter-code">
+      <Router basename="/assignment-3">
         <div>
           <Route exact path="/" render={HomeComponent} />
           <Route exact path="/userProfile" render={UserProfileComponent} />
